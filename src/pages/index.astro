@@ -1,16 +1,17 @@
 ---
 // index.astro — the homepage (route: "/").
-// For Phase 1 this just proves the layout + theme work. Real sections
-// (hero, about, projects, etc.) come in later phases.
+// Phase 2: assemble the sticky nav and the hero. Later phases add the
+// section components (About, Projects, Travel, ...) below the hero.
 import Layout from "../layouts/Layout.astro";
+import Nav from "../components/Nav.astro";
+import Hero from "../components/Hero.astro";
 ---
 
 <Layout title="John Jacobson — Portfolio">
-  <main class="container" style="padding-block: var(--space-6);">
-    <h1>John Jacobson</h1>
-    <p>
-      Foundation in place. This is a temporary placeholder confirming the dark
-      theme, layout, and global styles are working.
-    </p>
+  <!-- #top is the anchor the nav brand links back to -->
+  <span id="top"></span>
+  <Nav />
+  <main>
+    <Hero />
   </main>
 </Layout>

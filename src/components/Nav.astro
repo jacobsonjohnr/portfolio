@@ -1,0 +1,93 @@
+---
+/*
+  Nav.astro — sticky top navigation bar.
+
+  The links point to homepage section anchors (#about, #projects, ...).
+  Those sections don't exist yet — they arrive in later phases — so the
+  links won't jump anywhere for now. That's expected.
+
+  We define the links as a data array and loop over them with .map(),
+  so adding/removing a link later is a one-line change.
+*/
+const links = [
+  { href: "#about", label: "About" },
+  { href: "#projects", label: "Projects" },
+  { href: "#travel", label: "Travel" },
+  { href: "#resume", label: "Resume" },
+  { href: "#contact", label: "Contact" },
+];
+---
+
+<header class="nav">
+  <div class="container nav__inner">
+    <!-- Brand jumps back to the top of the page -->
+    <a href="#top" class="nav__brand">John Jacobson</a>
+
+    <nav aria-label="Primary">
+      <ul class="nav__links">
+        {
+          links.map((link) => (
+            <li>
+              <a href={link.href}>{link.label}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<style>
+  /* The <style> block is automatically scoped to this component by Astro,
+     so these class names won't clash with anything elsewhere. */
+  .nav {
+    position: sticky; /* stays pinned to the top as you scroll */
+    top: 0;
+    z-index: 50; /* sits above page content */
+    background: color-mix(in srgb, var(--bg) 80%, transparent);
+    backdrop-filter: blur(10px); /* frosted-glass effect over content */
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* brand left, links right */
+    height: 64px;
+  }
+
+  .nav__brand {
+    color: var(--text);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+
+  .nav__brand:hover {
+    color: var(--accent);
+  }
+
+  .nav__links {
+    display: flex;
+    gap: var(--space-4);
+    list-style: none; /* remove <li> bullets */
+    padding: 0;
+  }
+
+  .nav__links a {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    transition: color 0.15s ease;
+  }
+
+  .nav__links a:hover {
+    color: var(--text);
+  }
+
+  /* On narrow screens, hide the link list for now (a mobile menu comes later).
+     The brand stays so the bar still looks intentional. */
+  @media (max-width: 640px) {
+    .nav__links {
+      display: none;
+    }
+  }
+</style>
