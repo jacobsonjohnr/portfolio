@@ -1,0 +1,37 @@
+---
+/*
+  Layout.astro — the shared "page shell" every page wraps itself in.
+
+  The code between the --- fences is the "component frontmatter": it runs on
+  the server at build time (not in the browser). Here we declare the props
+  this layout accepts and import the global stylesheet.
+*/
+import "../styles/global.css";
+
+// Props let a page pass data into this layout (here: the <title> text).
+// We give `title` a default so pages can omit it.
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = "John Jacobson",
+  description = "Personal portfolio of John Jacobson.",
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="description" content={description} />
+    <title>{title}</title>
+  </head>
+  <body>
+    <!-- <slot /> is where each page's content gets injected -->
+    <slot />
+  </body>
+</html>
