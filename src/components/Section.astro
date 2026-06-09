@@ -1,0 +1,63 @@
+---
+/*
+  Section.astro — a reusable wrapper for every homepage content section.
+
+  This is the core lesson of Phase 3: a component that takes both PROPS
+  (data passed in) and a SLOT (arbitrary content placed inside its tags).
+
+  Usage:
+    <Section id="about" title="About" eyebrow="Who I am">
+      ...any content here lands in the <slot />...
+    </Section>
+
+  Centralizing the heading + spacing here means we style sections once and
+  every section stays visually consistent.
+*/
+interface Props {
+  id: string;          // anchor target, e.g. "about" -> href="#about"
+  title: string;       // the visible section heading
+  eyebrow?: string;    // optional small label above the title
+}
+
+const { id, title, eyebrow } = Astro.props;
+---
+
+<section id={id} class="section">
+  <div class="container">
+    <header class="section__head">
+      {eyebrow && <p class="section__eyebrow">{eyebrow}</p>}
+      <h2 class="section__title">{title}</h2>
+    </header>
+
+    <div class="section__body">
+      <slot />
+    </div>
+  </div>
+</section>
+
+<style>
+  .section {
+    padding-block: var(--space-6);
+    border-top: 1px solid var(--border); /* hairline divider between sections */
+    /* scroll-margin offsets the sticky 64px nav so anchored headings aren't
+       hidden underneath it when you jump to them */
+    scroll-margin-top: 64px;
+  }
+
+  .section__head {
+    margin-bottom: var(--space-5);
+  }
+
+  .section__eyebrow {
+    color: var(--accent);
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-bottom: var(--space-2);
+  }
+
+  .section__title {
+    margin: 0;
+  }
+</style>

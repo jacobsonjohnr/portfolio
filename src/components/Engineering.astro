@@ -1,0 +1,67 @@
+---
+/*
+  Engineering.astro — "Engineering Interests" section.
+
+  Note the framing: these are stated as INTERESTS and focus areas, not
+  accomplishments — so nothing here implies fake experience. Replace the
+  placeholder labels with the real topics/tools you care about.
+
+  The interest cards are data + .map(), so editing the list is trivial.
+*/
+import Section from "./Section.astro";
+
+const interests = [
+  { title: "[PLACEHOLDER: Interest area]", note: "[PLACEHOLDER: one line]" },
+  { title: "[PLACEHOLDER: Interest area]", note: "[PLACEHOLDER: one line]" },
+  { title: "[PLACEHOLDER: Interest area]", note: "[PLACEHOLDER: one line]" },
+  { title: "[PLACEHOLDER: Interest area]", note: "[PLACEHOLDER: one line]" },
+];
+---
+
+<Section id="engineering" title="Engineering Interests" eyebrow="What I'm drawn to">
+  <p>
+    [PLACEHOLDER: A sentence or two on your engineering focus — the areas of
+    electrical engineering you're most interested in and where you want to grow.]
+  </p>
+
+  <ul class="interests">
+    {
+      interests.map((item) => (
+        <li class="interests__card">
+          <h3 class="interests__title">{item.title}</h3>
+          <p class="interests__note">{item.note}</p>
+        </li>
+      ))
+    }
+  </ul>
+</Section>
+
+<style>
+  .interests {
+    list-style: none;
+    padding: 0;
+    margin-top: var(--space-4);
+    display: grid;
+    /* auto-fit + minmax = responsive cards with no media queries:
+       as many columns as fit at >=220px each, then wrap */
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: var(--space-3);
+  }
+
+  .interests__card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: var(--space-4);
+  }
+
+  .interests__title {
+    font-size: 1.05rem;
+    margin-bottom: var(--space-2);
+  }
+
+  .interests__note {
+    margin: 0;
+    font-size: 0.95rem;
+  }
+</style>
