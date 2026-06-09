@@ -1,17 +1,16 @@
 ---
-
+// index.astro — the homepage (route: "/").
+// For Phase 1 this just proves the layout + theme work. Real sections
+// (hero, about, projects, etc.) come in later phases.
+import Layout from "../layouts/Layout.astro";
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout title="John Jacobson — Portfolio">
+  <main class="container" style="padding-block: var(--space-6);">
+    <h1>John Jacobson</h1>
+    <p>
+      Foundation in place. This is a temporary placeholder confirming the dark
+      theme, layout, and global styles are working.
+    </p>
+  </main>
+</Layout>
