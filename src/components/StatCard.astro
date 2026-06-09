@@ -1,0 +1,55 @@
+---
+/*
+  StatCard.astro — a single eye-catching highlight figure.
+
+  Purely presentational: it renders whatever props it's given. Reused by
+  the Travel and Aviation sections so highlights look consistent.
+
+  Usage:
+    <StatCard value="5/7" label="Continents visited" detail="including Antarctica" />
+*/
+interface Props {
+  value: string;     // the big figure, e.g. "5/7" or "50"
+  label: string;     // what the figure means
+  detail?: string;   // optional small line under the label
+}
+
+const { value, label, detail } = Astro.props;
+---
+
+<div class="stat">
+  <span class="stat__value">{value}</span>
+  <span class="stat__label">{label}</span>
+  {detail && <span class="stat__detail">{detail}</span>}
+</div>
+
+<style>
+  .stat {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: var(--space-4);
+  }
+
+  .stat__value {
+    color: var(--accent);
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+
+  .stat__label {
+    color: var(--text);
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+
+  .stat__detail {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+  }
+</style>

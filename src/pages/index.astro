@@ -1,12 +1,14 @@
 ---
 // index.astro — the homepage (route: "/").
-// Phase 3: add the About, Engineering, and Hobbies sections below the hero.
+// Phase 4: add the Travel and Aviation sections after Hobbies.
 import Layout from "../layouts/Layout.astro";
 import Nav from "../components/Nav.astro";
 import Hero from "../components/Hero.astro";
 import About from "../components/About.astro";
 import Engineering from "../components/Engineering.astro";
 import Hobbies from "../components/Hobbies.astro";
+import Travel from "../components/Travel.astro";
+import Flying from "../components/Flying.astro";
 ---
 
 <Layout title="John Jacobson — Portfolio">
@@ -18,5 +20,7 @@ import Hobbies from "../components/Hobbies.astro";
     <About />
     <Engineering />
     <Hobbies />
+    <Travel />
+    <Flying />
   </main>
 </Layout>
