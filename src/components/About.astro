@@ -21,9 +21,35 @@ const focus = [
 
 <Section id="about" title="About">
   <p>
-    [PLACEHOLDER: A short paragraph — where you study, what you focus on in
-    electrical engineering, and the kind of work you want to do. Keep it tight.]
+    I'm John Jacobson, though most people call me Jack. I'm an engineering
+  student in the Grainger College of Engineering at the University of
+  Illinois, focused on electrical engineering.
   </p>
+
+  <p>
+    I've always chased curiosity, the need to figure out how things work,
+  but the one thing I could never quite understand was electricity. Tiny,
+  invisible electrons that light up the world, power our computers, and
+  drive everything around us. Trying to understand it led me to build my
+  own computer in middle school, and computers for my friends. It led me
+  to my first CS class, to Arduinos, and to studying the physics of
+  electricity and magnetism.
+  </p>
+
+  <p>
+    What I love about electrical engineering is its almost magical nature.
+  It lets you build what should be impossible, solving physical and
+  software limitations at once to arrive at something compact and elegant
+  that makes life better. To me, a device that can hold and display human
+  knowledge is genuinely otherworldly.
+  </p>
+
+  <p>
+    I want to keep chasing that curiosity into building the kind of products
+  I grew up admiring: elegant, compact, and woven so deeply into daily life
+  that people forget how much engineering is behind it all.
+  </p>
+
 
   <p class="about__focus-label">Current focus</p>
   <ul class="about__focus">
@@ -32,6 +58,18 @@ const focus = [
 </Section>
 
 <style>
+  /* The global reset (* { margin: 0 }) zeroed paragraph margins, so stacked
+     paragraphs had no gap. "p + p" targets only a paragraph immediately
+     preceded by another paragraph, so the first paragraph gets no extra top
+     margin and each following one gets a gap. (NB: this is scoped by Astro to
+     paragraphs authored in THIS component — we can't reach .section__body here
+     because that wrapper lives in Section.astro and carries a different scope.)
+     The focus-label below is also a <p>, but it sets the same margin-top value,
+     so the result is identical whichever rule applies to it. */
+  p + p {
+    margin-top: var(--space-4);
+  }
+
   .about__focus-label {
     margin-top: var(--space-4);
     color: var(--text);
