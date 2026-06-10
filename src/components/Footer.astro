@@ -1,0 +1,26 @@
+---
+/*
+  Footer.astro — site footer. Minimal: a copyright line with a year computed
+  at build time, so it never goes stale. Easy to extend later.
+*/
+const year = new Date().getFullYear();
+---
+
+<footer class="footer">
+  <div class="container">
+    <p class="footer__text">© {year} John Jacobson</p>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    border-top: 1px solid var(--border);
+    padding-block: var(--space-4);
+    margin-top: var(--space-6);
+  }
+
+  .footer__text {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+  }
+</style>
