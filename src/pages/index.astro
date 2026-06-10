@@ -1,14 +1,15 @@
 ---
 // index.astro — the homepage (route: "/").
-// Phase 4: add the Travel and Aviation sections after Hobbies.
+// R1: restructured so substance leads. New order:
+// Hero → Projects → About → Experience → Beyond Engineering → Contact.
 import Layout from "../layouts/Layout.astro";
 import Nav from "../components/Nav.astro";
 import Hero from "../components/Hero.astro";
+import Projects from "../components/Projects.astro";
 import About from "../components/About.astro";
-import Engineering from "../components/Engineering.astro";
-import Hobbies from "../components/Hobbies.astro";
-import Travel from "../components/Travel.astro";
-import Flying from "../components/Flying.astro";
+import Experience from "../components/Experience.astro";
+import BeyondEngineering from "../components/BeyondEngineering.astro";
+import Contact from "../components/Contact.astro";
 ---
 
 <Layout title="John Jacobson — Portfolio">
@@ -17,10 +18,10 @@ import Flying from "../components/Flying.astro";
   <Nav />
   <main>
     <Hero />
+    <Projects />
     <About />
-    <Engineering />
-    <Hobbies />
-    <Travel />
-    <Flying />
+    <Experience />
+    <BeyondEngineering />
+    <Contact />
   </main>
 </Layout>

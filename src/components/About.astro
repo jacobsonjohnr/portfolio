@@ -1,20 +1,59 @@
 ---
 /*
-  About.astro — the "About" section.
-  Wraps its content in the reusable <Section>. Copy is placeholder text
-  for you to replace with real wording — no invented facts.
+  About.astro — short "About" section (#about).
+
+  Reframed in R1: brief, and it now absorbs the old Engineering section —
+  what you study, your EE interests, and the kind of work you want. The
+  interest areas are a restrained INLINE list (small tags), deliberately not
+  a card grid, to avoid the templated look.
+
+  All prose is yours to write; interest labels are placeholders too.
 */
 import Section from "./Section.astro";
+
+// Short, factual focus areas — replace with the real ones (no card grid).
+const focus = [
+  "[PLACEHOLDER: focus area]",
+  "[PLACEHOLDER: focus area]",
+  "[PLACEHOLDER: focus area]",
+];
 ---
 
-<Section id="about" title="About" eyebrow="Who I am">
+<Section id="about" title="About">
   <p>
-    [PLACEHOLDER: A short, genuine paragraph about who you are — where you
-    study, what you focus on in electrical engineering, and what you care
-    about. Keep it conversational but professional.]
+    [PLACEHOLDER: A short paragraph — where you study, what you focus on in
+    electrical engineering, and the kind of work you want to do. Keep it tight.]
   </p>
-  <p>
-    [PLACEHOLDER: A second paragraph if you want — what motivates you, the kind
-    of work you want to do, or a line of personality that makes you memorable.]
-  </p>
+
+  <p class="about__focus-label">Current focus</p>
+  <ul class="about__focus">
+    {focus.map((area) => <li>{area}</li>)}
+  </ul>
 </Section>
+
+<style>
+  .about__focus-label {
+    margin-top: var(--space-4);
+    color: var(--text);
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+
+  /* Inline "tags" — a simple wrapping row, not cards. */
+  .about__focus {
+    list-style: none;
+    padding: 0;
+    margin-top: var(--space-2);
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  .about__focus li {
+    border: 1px solid var(--border);
+    border-radius: 999px; /* pill shape */
+    padding: 0.3rem 0.8rem;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+  }
+</style>
