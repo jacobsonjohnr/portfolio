@@ -195,6 +195,45 @@ hr {
   margin-top: var(--space-5);
 }
 
+/* Buttons. Used on the home page calls to action and the résumé download. */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 0.65rem 1.25rem;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  transition: background-color 0.15s ease, border-color 0.15s ease,
+    color 0.15s ease;
+}
+
+.btn:hover {
+  text-decoration: none;
+}
+
+.btn--primary {
+  background: var(--accent);
+  /* Very dark ink on the amber fill, rather than pure black. */
+  color: #14100a;
+}
+
+.btn--primary:hover {
+  background: var(--accent-hover);
+  color: #14100a;
+}
+
+.btn--ghost {
+  border-color: var(--border-strong);
+  color: var(--text);
+}
+
+.btn--ghost:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
 /* Small mono metadata: dates, tags, status. */
 .meta {
   font-family: var(--font-mono);
