@@ -1,0 +1,19 @@
+---
+import Layout from "../layouts/Layout.astro";
+import PageHeader from "../components/PageHeader.astro";
+import { site } from "../data/site";
+---
+
+<Layout
+  title="Contact"
+  description="Get in touch with John Jacobson by email, GitHub, or LinkedIn."
+>
+  <PageHeader title="Contact" />
+  <div class="container section">
+    <p><a href={`mailto:${site.email}`}>{site.email}</a></p>
+  </div>
+</Layout>
+
+<style>
+  .section { padding-block: var(--space-5); }
+</style>

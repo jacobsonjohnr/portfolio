@@ -1,0 +1,21 @@
+---
+import Layout from "../layouts/Layout.astro";
+import PageHeader from "../components/PageHeader.astro";
+---
+
+<Layout
+  title="About"
+  description="John Jacobson is an electrical engineering student at the University of Illinois working toward embedded systems and firmware."
+>
+  <PageHeader title="About" />
+  <div class="container section">
+    <p>
+      I am an engineering student in the Grainger College of Engineering at the
+      University of Illinois, working toward electrical engineering.
+    </p>
+  </div>
+</Layout>
+
+<style>
+  .section { padding-block: var(--space-5); }
+</style>

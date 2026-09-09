@@ -1,0 +1,33 @@
+---
+/*
+  PageHeader.astro — the h1 and optional standfirst at the top of every inner
+  page. Centralising it keeps the vertical rhythm identical across the site and
+  guarantees exactly one h1 per page.
+*/
+interface Props {
+  title: string;
+  lead?: string;
+}
+
+const { title, lead } = Astro.props;
+---
+
+<header class="page-head">
+  <div class="container">
+    <h1>{title}</h1>
+    {lead && <p class="page-head__lead">{lead}</p>}
+  </div>
+</header>
+
+<style>
+  .page-head {
+    padding-block: var(--space-6) var(--space-5);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .page-head__lead {
+    margin-top: var(--space-3);
+    font-size: var(--fs-lg);
+    color: var(--text-dim);
+  }
+</style>

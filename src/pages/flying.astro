@@ -1,0 +1,21 @@
+---
+import Layout from "../layouts/Layout.astro";
+import PageHeader from "../components/PageHeader.astro";
+---
+
+<Layout
+  title="Flying"
+  description="Student pilot training toward an FAA Private Pilot Certificate in Cessna 172s."
+>
+  <PageHeader
+    title="Flying"
+    lead="Student pilot working toward an FAA Private Pilot Certificate."
+  />
+  <div class="container section">
+    <p>I train in Cessna 172s at Triad Aviation Academy in Greensboro, North Carolina.</p>
+  </div>
+</Layout>
+
+<style>
+  .section { padding-block: var(--space-5); }
+</style>

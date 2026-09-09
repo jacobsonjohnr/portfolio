@@ -1,0 +1,18 @@
+---
+import Layout from "../layouts/Layout.astro";
+import PageHeader from "../components/PageHeader.astro";
+---
+
+<Layout
+  title="Résumé"
+  description="Education, projects, experience, and technical skills for John Jacobson."
+>
+  <PageHeader title="Résumé" />
+  <div class="container section">
+    <p><a href="/resume.pdf">Download the PDF</a></p>
+  </div>
+</Layout>
+
+<style>
+  .section { padding-block: var(--space-5); }
+</style>

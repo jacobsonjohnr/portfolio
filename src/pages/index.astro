@@ -1,32 +1,28 @@
 ---
-// index.astro — the homepage (route: "/").
-// R1: restructured so substance leads. New order:
-// Hero → Projects → About → Experience → Beyond Engineering → Contact.
+/*
+  index.astro — the homepage (route: "/").
+
+  The header, <main>, and footer now come from Layout, so this file lists only
+  the page's own sections. The homepage is rebuilt properly in a later phase;
+  these sections are the existing ones carried over so the site keeps building.
+*/
 import Layout from "../layouts/Layout.astro";
-import Nav from "../components/Nav.astro";
 import Hero from "../components/Hero.astro";
 import Projects from "../components/Projects.astro";
 import About from "../components/About.astro";
 import Experience from "../components/Experience.astro";
 import BeyondEngineering from "../components/BeyondEngineering.astro";
 import Contact from "../components/Contact.astro";
-import Footer from "../components/Footer.astro";
 ---
 
 <Layout
   title="John Jacobson"
   description="Electrical engineering student at the University of Illinois, building embedded hardware and firmware."
 >
-  <!-- #top is the anchor the nav brand links back to -->
-  <span id="top"></span>
-  <Nav />
-  <main id="main">
-    <Hero />
-    <Projects />
-    <About />
-    <Experience />
-    <BeyondEngineering />
-    <Contact />
-  </main>
-  <Footer />
+  <Hero />
+  <Projects />
+  <About />
+  <Experience />
+  <BeyondEngineering />
+  <Contact />
 </Layout>

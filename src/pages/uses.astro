@@ -1,0 +1,18 @@
+---
+import Layout from "../layouts/Layout.astro";
+import PageHeader from "../components/PageHeader.astro";
+---
+
+<Layout
+  title="Uses"
+  description="The editor, operating system, and hardware John Jacobson works on day to day."
+>
+  <PageHeader title="Uses" lead="The tools I work on every day." />
+  <div class="container section">
+    <p>Arch Linux with Hyprland, Neovim, and an ESP32-P4 on the desk.</p>
+  </div>
+</Layout>
+
+<style>
+  .section { padding-block: var(--space-5); }
+</style>

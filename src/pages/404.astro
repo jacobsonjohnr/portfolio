@@ -10,7 +10,7 @@ import Layout from "../layouts/Layout.astro";
   title="Page not found"
   description="That page does not exist. Head back to the homepage."
 >
-  <main id="main" class="container notfound">
+  <div class="container notfound">
     <p class="meta">404</p>
     <h1>That page does not exist</h1>
     <p>
@@ -18,7 +18,7 @@ import Layout from "../layouts/Layout.astro";
       site is reachable from the homepage.
     </p>
     <p><a href="/">Back to the homepage</a></p>
-  </main>
+  </div>
 </Layout>
 
 <style>
@@ -27,7 +27,7 @@ import Layout from "../layouts/Layout.astro";
     flex-direction: column;
     gap: var(--space-3);
     justify-content: center;
-    min-height: 70vh;
+    min-height: 60vh;
     padding-block: var(--space-6);
   }
 </style>

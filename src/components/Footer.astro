@@ -1,26 +1,114 @@
 ---
 /*
-  Footer.astro — site footer. Minimal: a copyright line with a year computed
-  at build time, so it never goes stale. Easy to extend later.
+  Footer.astro — closing bar on every page.
+
+  Repeats the primary navigation, adds the pages that are not important enough
+  for the header, and gives the three ways to get in touch. The year is
+  computed at build time so it cannot go stale.
 */
+import { site, navLinks } from "../data/site";
+
 const year = new Date().getFullYear();
 ---
 
 <footer class="footer">
+  <div class="container footer__inner">
+    <div class="footer__col">
+      <p class="footer__brand">{site.name}</p>
+      <p class="footer__note">
+        Electrical engineering student at the University of Illinois.
+      </p>
+    </div>
+
+    <nav class="footer__col" aria-label="Footer">
+      <h2 class="footer__heading">Pages</h2>
+      <ul class="footer__list">
+        {navLinks.map((link) => (
+          <li><a href={link.href}>{link.label}</a></li>
+        ))}
+        <li><a href="/uses">Uses</a></li>
+      </ul>
+    </nav>
+
+    <div class="footer__col">
+      <h2 class="footer__heading">Elsewhere</h2>
+      <ul class="footer__list">
+        <li><a href={`mailto:${site.email}`}>Email</a></li>
+        <li>
+          <a href={site.github} rel="me noopener noreferrer" target="_blank">GitHub</a>
+        </li>
+        <li>
+          <a href={site.linkedin} rel="me noopener noreferrer" target="_blank">LinkedIn</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
   <div class="container">
-    <p class="footer__text">© {year} John Jacobson</p>
+    <p class="footer__legal">© {year} {site.name}. Built with Astro.</p>
   </div>
 </footer>
 
 <style>
   .footer {
     border-top: 1px solid var(--border);
-    padding-block: var(--space-4);
-    margin-top: var(--space-6);
+    margin-top: var(--space-7);
+    padding-block: var(--space-5) var(--space-4);
   }
 
-  .footer__text {
-    color: var(--text-muted);
-    font-size: 0.85rem;
+  .footer__inner {
+    display: grid;
+    /* auto-fit collapses the three columns to one on a narrow screen without
+       needing a media query. */
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--space-4);
+  }
+
+  .footer__brand {
+    color: var(--text);
+    font-weight: 600;
+  }
+
+  .footer__note {
+    color: var(--text-dim);
+    font-size: var(--fs-sm);
+    margin-top: var(--space-1);
+  }
+
+  .footer__heading {
+    font-family: var(--font-mono);
+    font-size: var(--fs-xs);
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: var(--space-2);
+  }
+
+  .footer__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+
+  .footer__list a {
+    color: var(--text-dim);
+    font-size: var(--fs-sm);
+  }
+
+  .footer__list a:hover {
+    color: var(--accent-hover);
+  }
+
+  .footer__legal {
+    margin-top: var(--space-5);
+    padding-top: var(--space-3);
+    border-top: 1px solid var(--border);
+    color: var(--text-dim);
+    font-size: var(--fs-xs);
+    max-width: none;
   }
 </style>
