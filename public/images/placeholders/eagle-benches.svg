@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1067" width="1600" height="1067" role="presentation">
+  <rect width="1600" height="1067" fill="#141619"/>
+  <rect x="12" y="12" width="1576" height="1043" fill="none" stroke="#32363b" stroke-width="3"
+        stroke-dasharray="14 10" rx="14"/>
+  <text x="50%" y="47%" fill="#9b9d9f" text-anchor="middle" dominant-baseline="middle"
+        font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="80">eagle-benches</text>
+  <text x="50%" y="58%" fill="#6a6c6e" text-anchor="middle" dominant-baseline="middle"
+        font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="44">1600 × 1067 · 3:2</text>
+</svg>
