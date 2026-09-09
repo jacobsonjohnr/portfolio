@@ -20,25 +20,25 @@ export interface ImageSlot {
 
 export const images = {
   headshot: {
-    src: "/images/placeholders/headshot.svg",
-    alt: "John Jacobson, head and shoulders.",
+    src: "/images/headshot.jpg",
+    alt: "John Jacobson, head and shoulders, outdoors in a navy quarter-zip sweater.",
     ratio: "1 / 1",
-    width: 800,
-    height: 800,
+    width: 900,
+    height: 900,
   },
   "awd-desk": {
-    src: "/images/placeholders/awd-desk.svg",
-    alt: "The aviation weather display running on an ESP32-P4 development board wired to a seven inch touchscreen on a desk.",
+    src: "/images/awd-desk.jpg",
+    alt: "The ESP32-P4 development board mounted on the back of the seven inch touchscreen, held in one hand, with the ribbon cable joining the two.",
     ratio: "3 / 2",
     width: 1600,
-    height: 1067,
+    height: 1066,
   },
   "awd-detail": {
-    src: "/images/placeholders/awd-detail.svg",
-    alt: "Close view of the ESP32-P4 board and the ribbon cable running to the DSI touchscreen.",
+    src: "/images/awd-detail.jpg",
+    alt: "Close view of the ESP32-P4 module, its USB and Ethernet ports, and the ribbon cable curving away to the DSI touchscreen.",
     ratio: "3 / 2",
     width: 1600,
-    height: 1067,
+    height: 1066,
   },
   "fsm-protoboard": {
     src: "/images/placeholders/fsm-protoboard.svg",
@@ -48,11 +48,11 @@ export const images = {
     height: 1067,
   },
   "flying-cockpit": {
-    src: "/images/placeholders/flying-cockpit.svg",
-    alt: "The instrument panel of a Cessna 172 in flight, with the horizon visible through the windscreen.",
+    src: "/images/flying-cockpit.jpg",
+    alt: "The instrument panel of a Cessna 172 in flight, with farmland and a cumulus cloud visible through the windscreen.",
     ratio: "3 / 2",
     width: 1600,
-    height: 1067,
+    height: 1066,
   },
   "eagle-benches": {
     src: "/images/placeholders/eagle-benches.svg",
