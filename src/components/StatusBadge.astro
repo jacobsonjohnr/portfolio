@@ -1,0 +1,44 @@
+---
+/*
+  StatusBadge.astro — shows whether a project is finished or still moving.
+  The colour is backed up by the word itself, so the meaning does not depend on
+  being able to distinguish amber from green.
+*/
+interface Props {
+  status: "in-progress" | "complete";
+}
+
+const { status } = Astro.props;
+const label = status === "complete" ? "Complete" : "In progress";
+---
+
+<span class:list={["badge", `badge--${status}`]}>
+  <span class="badge__dot" aria-hidden="true"></span>{label}
+</span>
+
+<style>
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-family: var(--font-mono);
+    font-size: var(--fs-xs);
+    letter-spacing: 0.02em;
+    color: var(--text-dim);
+  }
+
+  .badge__dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .badge--in-progress .badge__dot {
+    background: var(--accent);
+  }
+
+  .badge--complete .badge__dot {
+    background: var(--status-done);
+  }
+</style>

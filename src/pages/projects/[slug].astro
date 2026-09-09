@@ -1,0 +1,151 @@
+---
+/*
+  [slug].astro — one page per Markdown file in the projects collection.
+
+  The square brackets make this a dynamic route. getStaticPaths runs at build
+  time and tells Astro which URLs to generate, so three Markdown files become
+  three static HTML pages with no server involved.
+*/
+import { getCollection, render } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+import Figure from "../../components/Figure.astro";
+import StatusBadge from "../../components/StatusBadge.astro";
+import { images, type ImageSlotName } from "../../data/images";
+import { monthYear, dateRange } from "../../data/format";
+
+export async function getStaticPaths() {
+  const projects = await getCollection("projects");
+  return projects.map((project) => ({
+    params: { slug: project.id },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+const d = project.data;
+
+/* render() compiles the Markdown body into a component we can drop in below. */
+const { Content } = await render(project);
+
+/* The schema stores the image as a plain string, so confirm it is a real slot
+   before handing it to Figure. */
+const slot =
+  d.image && d.image in images ? (d.image as ImageSlotName) : undefined;
+const detailSlot =
+  d.imageDetail && d.imageDetail in images
+    ? (d.imageDetail as ImageSlotName)
+    : undefined;
+---
+
+<Layout title={d.title} description={d.summary} type="article">
+  <article>
+    <header class="head">
+      <div class="container">
+        <p class="head__back"><a href="/projects">Back to projects</a></p>
+        <h1>{d.title}</h1>
+        <p class="head__summary">{d.summary}</p>
+
+        <div class="head__meta">
+          <StatusBadge status={d.status} />
+          <span class="meta">{dateRange(d.started, d.ended)}</span>
+        </div>
+
+        <ul class="tags">
+          {d.tech.map((item) => <li>{item}</li>)}
+        </ul>
+      </div>
+    </header>
+
+    <div class="container body">
+      {slot && (
+        <div class="body__figure">
+          <Figure slot={slot} loading="eager" />
+        </div>
+      )}
+
+      <div class="prose">
+        <Content />
+      </div>
+
+      {detailSlot && (
+        <div class="body__figure body__figure--after">
+          <Figure slot={detailSlot} />
+        </div>
+      )}
+
+      <footer class="body__footer">
+        {d.repo && (
+          <p><a href={d.repo} target="_blank" rel="noopener noreferrer">View the repository</a></p>
+        )}
+        <p class="meta">Last updated {monthYear(d.updated)}</p>
+      </footer>
+    </div>
+  </article>
+</Layout>
+
+<style>
+  .head {
+    padding-block: var(--space-5);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .head__back {
+    margin-bottom: var(--space-4);
+    font-size: var(--fs-sm);
+  }
+
+  .head__summary {
+    margin-top: var(--space-3);
+    font-size: var(--fs-lg);
+    color: var(--text-dim);
+  }
+
+  .head__meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-3);
+    margin-top: var(--space-4);
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    list-style: none;
+    margin: var(--space-3) 0 0;
+    padding: 0;
+  }
+
+  .tags li {
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 0.25rem 0.7rem;
+    font-family: var(--font-mono);
+    font-size: var(--fs-xs);
+    color: var(--text-dim);
+  }
+
+  .body {
+    padding-block: var(--space-5) var(--space-6);
+  }
+
+  .body__figure {
+    max-width: 720px;
+    margin-bottom: var(--space-5);
+  }
+
+  .body__figure--after {
+    margin-top: var(--space-5);
+    margin-bottom: 0;
+  }
+
+  .body__footer {
+    margin-top: var(--space-6);
+    padding-top: var(--space-3);
+    border-top: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+</style>

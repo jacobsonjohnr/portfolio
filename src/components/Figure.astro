@@ -1,0 +1,62 @@
+---
+/*
+  Figure.astro — the single way an image is placed on this site.
+
+  The wrapper reserves the slot's aspect ratio before the file loads, so
+  swapping a placeholder for a real photo shifts nothing on the page. Passing a
+  slot name that does not exist in images.ts is a build error, not a broken
+  image at runtime.
+*/
+import { images, type ImageSlotName } from "../data/images";
+
+interface Props {
+  slot: ImageSlotName;
+  caption?: string;
+  /* Above-the-fold images should load eagerly; everything else stays lazy. */
+  loading?: "lazy" | "eager";
+}
+
+const { slot, caption, loading = "lazy" } = Astro.props;
+const image = images[slot];
+---
+
+<figure class="figure">
+  <div class="figure__frame" style={`aspect-ratio: ${image.ratio};`}>
+    <img
+      src={image.src}
+      alt={image.alt}
+      width={image.width}
+      height={image.height}
+      loading={loading}
+      decoding="async"
+    />
+  </div>
+  {caption && <figcaption class="figure__caption">{caption}</figcaption>}
+</figure>
+
+<style>
+  .figure {
+    margin: 0;
+  }
+
+  .figure__frame {
+    overflow: hidden;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+  }
+
+  .figure__frame img {
+    width: 100%;
+    height: 100%;
+    /* Fills the reserved box without distorting, whatever the real photo's
+       exact dimensions turn out to be. */
+    object-fit: cover;
+  }
+
+  .figure__caption {
+    margin-top: var(--space-2);
+    color: var(--text-dim);
+    font-size: var(--fs-sm);
+  }
+</style>

@@ -1,0 +1,33 @@
+---
+/*
+  404.astro — served for any URL that does not match a route.
+  Cloudflare Pages picks up dist/404.html automatically.
+*/
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout
+  title="Page not found"
+  description="That page does not exist. Head back to the homepage."
+>
+  <div class="container notfound">
+    <p class="meta">404</p>
+    <h1>That page does not exist</h1>
+    <p>
+      The link may be out of date, or the page may have moved. Everything on the
+      site is reachable from the homepage.
+    </p>
+    <p><a href="/">Back to the homepage</a></p>
+  </div>
+</Layout>
+
+<style>
+  .notfound {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    justify-content: center;
+    min-height: 60vh;
+    padding-block: var(--space-6);
+  }
+</style>

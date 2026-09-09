@@ -1,0 +1,129 @@
+---
+/*
+  contact.astro — three links and nothing else.
+
+  No form, because the site is static and there is no backend to receive one. A
+  form that silently fails is worse than a mailto link that works.
+*/
+import Layout from "../layouts/Layout.astro";
+import PageHeader from "../components/PageHeader.astro";
+import { site } from "../data/site";
+
+const methods = [
+  {
+    label: "Email",
+    value: site.email,
+    href: `mailto:${site.email}`,
+    note: "The best way to reach me.",
+    external: false,
+  },
+  {
+    label: "LinkedIn",
+    value: "in/john-jacobson",
+    href: site.linkedin,
+    note: "Same history as the résumé.",
+    external: true,
+  },
+  {
+    label: "GitHub",
+    value: "jacobsonjohnr",
+    href: site.github,
+    note: "Where the project code lives.",
+    external: true,
+  },
+];
+---
+
+<Layout
+  title="Contact"
+  description="Get in touch with John Jacobson by email, LinkedIn, or GitHub."
+>
+  <PageHeader title="Contact" />
+
+  <div class="container body">
+    <div class="prose">
+      <p>
+        Email is the best way to reach me and I do answer it. If you are
+        recruiting for an internship, naming the role in the subject line helps
+        me come back with something useful rather than something generic.
+      </p>
+    </div>
+
+    <ul class="methods">
+      {
+        methods.map((method) => (
+          <li class="method">
+            <span class="method__label">{method.label}</span>
+            <a
+              class="method__value"
+              href={method.href}
+              target={method.external ? "_blank" : undefined}
+              rel={method.external ? "noopener noreferrer" : undefined}
+            >
+              {method.value}
+            </a>
+            <span class="method__note">{method.note}</span>
+          </li>
+        ))
+      }
+    </ul>
+
+    <p class="body__resume">
+      <a href="/resume">Read the résumé</a>
+    </p>
+  </div>
+</Layout>
+
+<style>
+  .body {
+    padding-block: var(--space-5) var(--space-6);
+  }
+
+  .methods {
+    list-style: none;
+    margin: var(--space-5) 0 0;
+    padding: 0;
+    max-width: 640px;
+  }
+
+  .method {
+    display: grid;
+    gap: var(--space-1);
+    padding-block: var(--space-3);
+    border-bottom: 1px solid var(--border);
+  }
+
+  @media (min-width: 640px) {
+    .method {
+      grid-template-columns: 110px 1fr;
+      column-gap: var(--space-4);
+      align-items: baseline;
+    }
+
+    .method__note {
+      grid-column: 2;
+    }
+  }
+
+  .method__label {
+    font-family: var(--font-mono);
+    font-size: var(--fs-xs);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+
+  .method__value {
+    font-size: var(--fs-lg);
+  }
+
+  .method__note {
+    color: var(--text-dim);
+    font-size: var(--fs-sm);
+  }
+
+  .body__resume {
+    margin-top: var(--space-5);
+    font-size: var(--fs-sm);
+  }
+</style>

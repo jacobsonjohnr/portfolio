@@ -1,26 +1,142 @@
 ---
-// index.astro — the homepage (route: "/").
-// Phase 4: add the Travel and Aviation sections after Hobbies.
+/*
+  index.astro — the homepage (route: "/").
+
+  Leads with what was built rather than who I am, because the people this site
+  is for arrive wanting the work. Featured projects are chosen by the `featured`
+  flag in each Markdown file, so promoting a project is a frontmatter change
+  rather than an edit here.
+*/
+import { getCollection } from "astro:content";
 import Layout from "../layouts/Layout.astro";
-import Nav from "../components/Nav.astro";
-import Hero from "../components/Hero.astro";
-import About from "../components/About.astro";
-import Engineering from "../components/Engineering.astro";
-import Hobbies from "../components/Hobbies.astro";
-import Travel from "../components/Travel.astro";
-import Flying from "../components/Flying.astro";
+import Section from "../components/Section.astro";
+import ProjectCard from "../components/ProjectCard.astro";
+
+const all = await getCollection("projects");
+const featured = all
+  .filter((project) => project.data.featured)
+  .sort((a, b) => b.data.started.getTime() - a.data.started.getTime());
 ---
 
-<Layout title="John Jacobson — Portfolio">
-  <!-- #top is the anchor the nav brand links back to -->
-  <span id="top"></span>
-  <Nav />
-  <main>
-    <Hero />
-    <About />
-    <Engineering />
-    <Hobbies />
-    <Travel />
-    <Flying />
-  </main>
+<Layout
+  title="John Jacobson"
+  description="Electrical engineering student at the University of Illinois, building embedded hardware and the firmware that runs on it."
+>
+  <section class="hero">
+    <div class="container">
+      <h1>John Jacobson</h1>
+
+      <p class="hero__lead">
+        I am an electrical engineering student at the University of Illinois. I
+        build embedded hardware and write the firmware that runs on it.
+      </p>
+
+      <p class="hero__body">
+        Right now that means an ESP32 weather terminal for pilots and a vending
+        machine controller built out of NAND gates. I am looking for an
+        internship in embedded systems and firmware, or in FPGA and ASIC design.
+      </p>
+
+      <div class="hero__actions">
+        <a class="btn btn--primary" href="/projects">View projects</a>
+        <a class="btn btn--ghost" href="/resume">Résumé</a>
+        <a class="btn btn--ghost" href="/contact">Contact</a>
+      </div>
+    </div>
+  </section>
+
+  <Section id="selected" title="Selected projects">
+    <ul class="featured">
+      {
+        featured.map((project) => (
+          <li class="featured__item">
+            <ProjectCard
+              href={`/projects/${project.id}`}
+              title={project.data.title}
+              summary={project.data.summary}
+              status={project.data.status}
+              started={project.data.started}
+              ended={project.data.ended}
+              tech={project.data.tech}
+              headingLevel="h3"
+            />
+          </li>
+        ))
+      }
+    </ul>
+
+    <p class="featured__all"><a href="/projects">All projects</a></p>
+  </Section>
+
+  <Section id="beyond" title="Beyond the bench">
+    <p>
+      I am a student pilot working toward a private certificate, which is where
+      the weather display came from. I check field conditions before I fly, and
+      I wanted them on a screen on my desk instead of buried in an app.
+    </p>
+
+    <p class="beyond__links">
+      <a href="/flying">More about flying</a>
+      <span class="beyond__sep" aria-hidden="true">·</span>
+      <a href="/about">More about me</a>
+    </p>
+  </Section>
 </Layout>
+
+<style>
+  .hero {
+    padding-block: var(--space-7) var(--space-6);
+  }
+
+  .hero__lead {
+    margin-top: var(--space-4);
+    font-size: var(--fs-lg);
+    color: var(--text);
+  }
+
+  .hero__body {
+    margin-top: var(--space-3);
+    color: var(--text-dim);
+  }
+
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin-top: var(--space-5);
+  }
+
+  .featured {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+  }
+
+  .featured__item {
+    padding-bottom: var(--space-5);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .featured__item:last-child {
+    padding-bottom: 0;
+    border-bottom: 0;
+  }
+
+  .featured__all {
+    margin-top: var(--space-5);
+    font-size: var(--fs-sm);
+  }
+
+  .beyond__links {
+    margin-top: var(--space-4);
+    font-size: var(--fs-sm);
+  }
+
+  .beyond__sep {
+    color: var(--text-dim);
+    margin-inline: var(--space-2);
+  }
+</style>

@@ -1,0 +1,181 @@
+---
+/*
+  resume.astro — a readable HTML mirror of the PDF.
+
+  Having the content as real HTML means it is indexable, linkable to a specific
+  section, and readable on a phone without downloading a PDF and pinching to
+  zoom. The PDF stays available for anyone who wants the printable version.
+
+  Section labels use a description list rather than a label followed by a colon,
+  which keeps the markup semantic and the punctuation rule intact.
+*/
+import Layout from "../layouts/Layout.astro";
+import PageHeader from "../components/PageHeader.astro";
+import { sections, skills } from "../data/resume";
+import { site } from "../data/site";
+---
+
+<Layout
+  title="Résumé"
+  description="Education, projects, experience, and technical skills for John Jacobson, electrical engineering student at the University of Illinois."
+>
+  <PageHeader
+    title="Résumé"
+    lead="Electrical engineering student at the University of Illinois, working toward embedded systems and firmware."
+  />
+
+  <div class="container body">
+    <div class="actions">
+      <a class="btn btn--primary" href="/resume.pdf" download="John-Jacobson-Resume.pdf">
+        Download PDF
+      </a>
+      <a class="btn btn--ghost" href={`mailto:${site.email}`}>Email me</a>
+    </div>
+
+    {
+      sections.map((section) => (
+        <section class="rsection">
+          <h2 class="rsection__heading">{section.heading}</h2>
+
+          {section.entries.map((entry) => (
+            <article class="entry">
+              <div class="entry__head">
+                <h3 class="entry__title">{entry.title}</h3>
+                <p class="entry__dates meta">{entry.dates}</p>
+              </div>
+
+              {(entry.org || entry.location) && (
+                <p class="entry__org">
+                  {entry.org}
+                  {entry.org && entry.location && <span class="entry__sep">, </span>}
+                  {entry.location}
+                </p>
+              )}
+
+              <ul class="entry__bullets">
+                {entry.bullets.map((bullet) => <li>{bullet}</li>)}
+              </ul>
+            </article>
+          ))}
+        </section>
+      ))
+    }
+
+    <section class="rsection">
+      <h2 class="rsection__heading">Technical skills</h2>
+      <dl class="skills">
+        {
+          skills.map((group) => (
+            <div class="skills__row">
+              <dt class="skills__label">{group.label}</dt>
+              <dd class="skills__items">{group.items}</dd>
+            </div>
+          ))
+        }
+      </dl>
+    </section>
+  </div>
+</Layout>
+
+<style>
+  .body {
+    padding-block: var(--space-5) var(--space-6);
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin-bottom: var(--space-6);
+  }
+
+  .rsection {
+    margin-top: var(--space-6);
+  }
+
+  .rsection:first-of-type {
+    margin-top: 0;
+  }
+
+  .rsection__heading {
+    font-family: var(--font-mono);
+    font-size: var(--fs-xs);
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    padding-bottom: var(--space-2);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .entry {
+    margin-top: var(--space-4);
+  }
+
+  .entry__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-2);
+  }
+
+  .entry__title {
+    font-size: var(--fs-lg);
+  }
+
+  .entry__dates {
+    flex-shrink: 0;
+  }
+
+  .entry__org {
+    margin-top: var(--space-1);
+    color: var(--text-dim);
+    font-size: var(--fs-sm);
+  }
+
+  .entry__bullets {
+    margin-top: var(--space-2);
+    padding-left: 1.1rem;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .entry__bullets li {
+    color: var(--text-dim);
+    max-width: var(--measure);
+  }
+
+  .skills {
+    margin: var(--space-4) 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .skills__row {
+    display: grid;
+    gap: var(--space-1);
+  }
+
+  @media (min-width: 640px) {
+    .skills__row {
+      grid-template-columns: 160px 1fr;
+      gap: var(--space-3);
+    }
+  }
+
+  .skills__label {
+    font-family: var(--font-mono);
+    font-size: var(--fs-xs);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    padding-top: 0.2rem;
+  }
+
+  .skills__items {
+    margin: 0;
+  }
+</style>

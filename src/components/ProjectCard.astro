@@ -1,0 +1,100 @@
+---
+/*
+  ProjectCard.astro — one project summary, used on both the home page and the
+  projects index so the two can never drift apart.
+
+  headingLevel exists because heading order has to stay correct on each page.
+  The projects index uses h2 because the cards are its top level content. The
+  home page uses h3 because they sit under a "Selected projects" h2.
+*/
+import StatusBadge from "./StatusBadge.astro";
+import { dateRange } from "../data/format";
+
+interface Props {
+  href: string;
+  title: string;
+  summary: string;
+  status: "in-progress" | "complete";
+  started: Date;
+  ended?: Date;
+  tech: readonly string[];
+  headingLevel?: "h2" | "h3";
+}
+
+const {
+  href,
+  title,
+  summary,
+  status,
+  started,
+  ended,
+  tech,
+  headingLevel = "h2",
+} = Astro.props;
+
+/* A capitalised variable renders as a dynamic tag name in Astro. */
+const Heading = headingLevel;
+---
+
+<article class="card">
+  <div class="card__meta">
+    <StatusBadge status={status} />
+    <span class="meta">{dateRange(started, ended)}</span>
+  </div>
+
+  <Heading class="card__title">
+    <a href={href}>{title}</a>
+  </Heading>
+
+  <p class="card__summary">{summary}</p>
+
+  <ul class="card__tags">
+    {tech.map((item) => <li>{item}</li>)}
+  </ul>
+</article>
+
+<style>
+  .card__meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-3);
+    margin-bottom: var(--space-2);
+  }
+
+  .card__title {
+    font-size: var(--fs-xl);
+  }
+
+  .card__title a {
+    color: var(--text);
+  }
+
+  .card__title a:hover {
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  .card__summary {
+    margin-top: var(--space-2);
+    color: var(--text-dim);
+  }
+
+  .card__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    list-style: none;
+    margin: var(--space-3) 0 0;
+    padding: 0;
+  }
+
+  .card__tags li {
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 0.25rem 0.7rem;
+    font-family: var(--font-mono);
+    font-size: var(--fs-xs);
+    color: var(--text-dim);
+  }
+</style>

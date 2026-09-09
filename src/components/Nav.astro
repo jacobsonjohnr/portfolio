@@ -1,37 +1,45 @@
 ---
 /*
-  Nav.astro — sticky top navigation bar.
+  Nav.astro — site header.
 
-  The links point to homepage section anchors (#about, #projects, ...).
-  Those sections don't exist yet — they arrive in later phases — so the
-  links won't jump anywhere for now. That's expected.
+  No JavaScript and no hamburger menu. With five short links there is nothing
+  worth hiding behind a toggle, so the bar simply changes shape: on narrow
+  screens the brand sits on its own line with the links wrapping underneath,
+  and from 640px up it becomes a single sticky row. A disclosure widget here
+  would be more code, more failure modes, and worse for the user.
 
-  We define the links as a data array and loop over them with .map(),
-  so adding/removing a link later is a one-line change.
+  The header is only sticky on wider screens. On a phone a pinned two-line
+  header would eat too much of the viewport, so it scrolls away instead.
 */
-const links = [
-  { href: "#about", label: "About" },
-  { href: "#engineering", label: "Engineering" },
-  { href: "#hobbies", label: "Hobbies" },
-  { href: "#projects", label: "Projects" },
-  { href: "#travel", label: "Travel" },
-  { href: "#flying", label: "Aviation" },
-  { href: "#resume", label: "Resume" },
-  { href: "#contact", label: "Contact" },
-];
+import { site, navLinks } from "../data/site";
+
+/* Normalise away any trailing slash so "/about" and "/about/" both match. */
+const path = Astro.url.pathname.replace(/\/+$/, "") || "/";
+
+function isCurrent(href: string): boolean {
+  /* startsWith catches project detail pages, so /projects/foo still marks
+     Projects as the current section. */
+  return path === href || path.startsWith(href + "/");
+}
 ---
 
 <header class="nav">
   <div class="container nav__inner">
-    <!-- Brand jumps back to the top of the page -->
-    <a href="#top" class="nav__brand">John Jacobson</a>
+    <a class="nav__brand" href="/" aria-current={path === "/" ? "page" : undefined}>
+      {site.name}
+    </a>
 
     <nav aria-label="Primary">
       <ul class="nav__links">
         {
-          links.map((link) => (
+          navLinks.map((link) => (
             <li>
-              <a href={link.href}>{link.label}</a>
+              <a
+                href={link.href}
+                aria-current={isCurrent(link.href) ? "page" : undefined}
+              >
+                {link.label}
+              </a>
             </li>
           ))
         }
@@ -41,22 +49,17 @@ const links = [
 </header>
 
 <style>
-  /* The <style> block is automatically scoped to this component by Astro,
-     so these class names won't clash with anything elsewhere. */
   .nav {
-    position: sticky; /* stays pinned to the top as you scroll */
-    top: 0;
-    z-index: 50; /* sits above page content */
-    background: color-mix(in srgb, var(--bg) 80%, transparent);
-    backdrop-filter: blur(10px); /* frosted-glass effect over content */
+    background: color-mix(in srgb, var(--bg) 85%, transparent);
+    backdrop-filter: blur(8px);
     border-bottom: 1px solid var(--border);
   }
 
   .nav__inner {
     display: flex;
-    align-items: center;
-    justify-content: space-between; /* brand left, links right */
-    height: 64px;
+    flex-direction: column;
+    gap: var(--space-2);
+    padding-block: var(--space-3);
   }
 
   .nav__brand {
@@ -67,30 +70,52 @@ const links = [
 
   .nav__brand:hover {
     color: var(--accent);
+    text-decoration: none;
   }
 
   .nav__links {
     display: flex;
-    gap: var(--space-4);
-    list-style: none; /* remove <li> bullets */
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    list-style: none;
+    margin: 0;
     padding: 0;
   }
 
   .nav__links a {
-    color: var(--text-muted);
-    font-size: 0.95rem;
+    color: var(--text-dim);
+    font-size: var(--fs-sm);
     transition: color 0.15s ease;
   }
 
   .nav__links a:hover {
     color: var(--text);
+    text-decoration: none;
   }
 
-  /* On narrow screens, hide the link list for now (a mobile menu comes later).
-     The brand stays so the bar still looks intentional. */
-  @media (max-width: 640px) {
+  /* The page you are on, marked for sighted users and screen readers alike. */
+  .nav__links a[aria-current="page"] {
+    color: var(--text);
+  }
+
+  @media (min-width: 640px) {
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .nav__inner {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-4);
+      height: var(--nav-h);
+      padding-block: 0;
+    }
+
     .nav__links {
-      display: none;
+      gap: var(--space-4);
     }
   }
 </style>

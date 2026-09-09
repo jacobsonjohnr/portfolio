@@ -1,37 +1,47 @@
 ---
 /*
-  Layout.astro — the shared "page shell" every page wraps itself in.
+  Layout.astro — the page shell every route wraps itself in.
 
-  The code between the --- fences is the "component frontmatter": it runs on
-  the server at build time (not in the browser). Here we declare the props
-  this layout accepts and import the global stylesheet.
+  Frontmatter (between the --- fences) runs at build time on the server, never
+  in the browser. Imports here are bundled once and shared across pages.
+
+  Font CSS is imported rather than linked from Google Fonts, so the files are
+  served from this domain. Fontsource splits each family by unicode range, so an
+  English page only ever downloads the latin subset.
+
+  The header, <main>, and footer live here so every page gets the same shell and
+  the skip link always has a target. Pages supply only their own content.
 */
+import "@fontsource-variable/ibm-plex-sans/wght.css";
+import "@fontsource/ibm-plex-mono/400.css";
+import "@fontsource/ibm-plex-mono/500.css";
 import "../styles/global.css";
+import BaseHead from "../components/BaseHead.astro";
+import Nav from "../components/Nav.astro";
+import Footer from "../components/Footer.astro";
 
-// Props let a page pass data into this layout (here: the <title> text).
-// We give `title` a default so pages can omit it.
 interface Props {
-  title?: string;
-  description?: string;
+  title: string;
+  description: string;
+  image?: string;
+  type?: "website" | "article";
 }
 
-const {
-  title = "John Jacobson",
-  description = "Personal portfolio of John Jacobson.",
-} = Astro.props;
+const { title, description, image, type } = Astro.props;
 ---
 
 <!doctype html>
 <html lang="en">
   <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="description" content={description} />
-    <title>{title}</title>
+    <BaseHead title={title} description={description} image={image} type={type} />
   </head>
   <body>
-    <!-- <slot /> is where each page's content gets injected -->
-    <slot />
+    <a class="skip-link" href="#main">Skip to content</a>
+    <Nav />
+    <main id="main">
+      <!-- Each page's content lands in the slot. -->
+      <slot />
+    </main>
+    <Footer />
   </body>
 </html>

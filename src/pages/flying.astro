@@ -1,0 +1,149 @@
+---
+/*
+  flying.astro — the flight training page.
+
+  Kept as its own page rather than folded into About, because the training is
+  the most distinctive thing on the site and it is where the flagship project
+  came from.
+*/
+import Layout from "../layouts/Layout.astro";
+import PageHeader from "../components/PageHeader.astro";
+import Figure from "../components/Figure.astro";
+import { milestones, statusLabel } from "../data/flying";
+---
+
+<Layout
+  title="Flying"
+  description="Student pilot training toward an FAA Private Pilot Certificate in Cessna 172s, and how it connects to the embedded work."
+>
+  <PageHeader
+    title="Flying"
+    lead="Student pilot working toward an FAA Private Pilot Certificate, Airplane Single Engine Land."
+  />
+
+  <div class="container body">
+    <div class="body__figure">
+      <Figure slot="flying-cockpit" loading="eager" />
+    </div>
+
+    <div class="prose">
+      <h2>Where I train</h2>
+      <p>
+        I fly Cessna 172s at Triad Aviation Academy at KGSO in Greensboro, North
+        Carolina. I have logged over 70 hours, including solo cross country and
+        night flights, and I completed ground school through Sporty's.
+      </p>
+
+      <h2>What I am comfortable with</h2>
+      <p>
+        Most of my cross country planning has been around KGSO, KTTA, and KMWK.
+        I am comfortable requesting and working under VFR flight following,
+        handling ATC radio work, navigating with the GNS 430, identifying VOR
+        and NDB stations, and flying the 172 by its published V speeds.
+      </p>
+
+      <h2>Why it belongs on an engineering site</h2>
+      <p>
+        Flying is the reason the Aviation Weather Display exists. I check METARs
+        before I fly, and wanting that information on a screen on my desk rather
+        than inside an app is what turned into an embedded project.
+      </p>
+      <p>
+        It has also changed how I work. A preflight is a checklist you run the
+        same way every time precisely because you will eventually be tired, or
+        rushed, or certain you already checked. Aviation assumes people make
+        mistakes and builds the procedure around that assumption instead of
+        around good intentions. That is a better model for engineering than
+        trusting yourself to be careful.
+      </p>
+
+      <h2>Where I am now</h2>
+      <p>
+        The FAA written exam is the next milestone, and it is what I am studying
+        for. Training has been paused while I have been at school.
+      </p>
+    </div>
+
+    <section class="milestones" aria-labelledby="milestones-heading">
+      <h2 id="milestones-heading" class="milestones__heading">Training so far</h2>
+      <ul class="milestones__list">
+        {
+          milestones.map((milestone) => (
+            <li class:list={["milestone", `milestone--${milestone.status}`]}>
+              <span class="milestone__dot" aria-hidden="true" />
+              <span class="milestone__label">{milestone.label}</span>
+              <span class="milestone__status">{statusLabel[milestone.status]}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+  </div>
+</Layout>
+
+<style>
+  .body {
+    padding-block: var(--space-5) var(--space-6);
+  }
+
+  .body__figure {
+    max-width: 720px;
+    margin-bottom: var(--space-5);
+  }
+
+  .milestones {
+    margin-top: var(--space-6);
+    padding-top: var(--space-5);
+    border-top: 1px solid var(--border);
+  }
+
+  .milestones__heading {
+    font-size: var(--fs-lg);
+  }
+
+  .milestones__list {
+    list-style: none;
+    margin: var(--space-4) 0 0;
+    padding: 0;
+    max-width: 520px;
+  }
+
+  .milestone {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding-block: var(--space-2);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .milestone:last-child {
+    border-bottom: 0;
+  }
+
+  .milestone__dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    background: var(--border-strong);
+  }
+
+  .milestone--complete .milestone__dot {
+    background: var(--status-done);
+  }
+
+  .milestone--current .milestone__dot {
+    background: var(--accent);
+  }
+
+  .milestone__label {
+    flex: 1;
+  }
+
+  /* The word carries the meaning, so the dot colour is reinforcement only. */
+  .milestone__status {
+    font-family: var(--font-mono);
+    font-size: var(--fs-xs);
+    color: var(--text-dim);
+  }
+</style>

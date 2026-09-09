@@ -1,0 +1,125 @@
+---
+/*
+  uses.astro — the daily driver setup.
+
+  Lowest priority page on the site. It exists because the toolchain says
+  something real about how someone works, and it costs almost nothing to keep
+  accurate. Groups render from a local array rather than a shared data module,
+  since nothing else on the site needs this list.
+*/
+import Layout from "../layouts/Layout.astro";
+import PageHeader from "../components/PageHeader.astro";
+
+const groups = [
+  {
+    label: "Operating system",
+    items: "Arch Linux with Hyprland",
+  },
+  {
+    label: "Editors",
+    items: "Neovim day to day, VS Code when a project expects it",
+  },
+  {
+    label: "Languages",
+    items: "C, C++, Python, Java, LC-3 assembly, HTML and CSS",
+  },
+  {
+    label: "Embedded",
+    items: "ESP-IDF, CMake, LVGL",
+  },
+  {
+    label: "Digital logic",
+    items: "Xilinx Vivado, SystemVerilog",
+  },
+  {
+    label: "CAD and 3D",
+    items: "Onshape, Fusion 360, Blender",
+  },
+  {
+    label: "Version control",
+    items: "Git, with everything on GitHub",
+  },
+  {
+    label: "This site",
+    items: "Astro, vanilla CSS, deployed on Cloudflare Pages",
+  },
+];
+---
+
+<Layout
+  title="Uses"
+  description="The operating system, editor, and toolchain John Jacobson works in day to day."
+>
+  <PageHeader title="Uses" lead="What I actually work in day to day." />
+
+  <div class="container body">
+    <div class="prose">
+      <p>
+        I run Arch Linux with Hyprland as a daily driver. It needs more
+        configuring than a distribution that arrives finished, which is most of
+        the reason I run it. I built my first PC in middle school and I have
+        never really lost the urge to know what the layer underneath is doing.
+      </p>
+      <p>
+        The embedded work happens on a Waveshare ESP32-P4 development kit driving
+        a seven inch DSI touchscreen, built with ESP-IDF and CMake from the
+        terminal rather than through an IDE.
+      </p>
+    </div>
+
+    <dl class="tools">
+      {
+        groups.map((group) => (
+          <div class="tools__row">
+            <dt class="tools__label">{group.label}</dt>
+            <dd class="tools__items">{group.items}</dd>
+          </div>
+        ))
+      }
+    </dl>
+  </div>
+</Layout>
+
+<style>
+  .body {
+    padding-block: var(--space-5) var(--space-6);
+  }
+
+  .tools {
+    margin: var(--space-6) 0 0;
+    display: flex;
+    flex-direction: column;
+    max-width: 680px;
+  }
+
+  .tools__row {
+    display: grid;
+    gap: var(--space-1);
+    padding-block: var(--space-3);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .tools__row:last-child {
+    border-bottom: 0;
+  }
+
+  @media (min-width: 640px) {
+    .tools__row {
+      grid-template-columns: 190px 1fr;
+      column-gap: var(--space-4);
+      align-items: baseline;
+    }
+  }
+
+  .tools__label {
+    font-family: var(--font-mono);
+    font-size: var(--fs-xs);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+
+  .tools__items {
+    margin: 0;
+  }
+</style>

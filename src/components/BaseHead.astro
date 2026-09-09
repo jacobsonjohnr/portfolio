@@ -1,0 +1,59 @@
+---
+/*
+  BaseHead.astro — everything that belongs in <head>, in one place.
+
+  Each page passes its own title and description, so search results and link
+  previews describe that page rather than repeating the site name. Canonical
+  and social URLs are built from `site` in astro.config.mjs, which is why that
+  value has to stay correct.
+*/
+interface Props {
+  title: string;
+  description: string;
+  /* Path to a social preview image, relative to the site root. */
+  image?: string;
+  /* Article pages (project write-ups) get og:type="article". */
+  type?: "website" | "article";
+}
+
+const {
+  title,
+  description,
+  image = "/images/og-default.png",
+  type = "website",
+} = Astro.props;
+
+const SITE_NAME = "John Jacobson";
+
+/* The homepage shouldn't read "John Jacobson · John Jacobson". */
+const fullTitle = title === SITE_NAME ? title : `${title} · ${SITE_NAME}`;
+
+/* new URL(path, base) turns a relative path into the absolute one crawlers and
+   social scrapers need. Astro.site comes from astro.config.mjs. */
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const socialImage = new URL(image, Astro.site);
+---
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="generator" content={Astro.generator} />
+
+<title>{fullTitle}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical} />
+
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+<!-- Open Graph, used by LinkedIn, Slack, iMessage and most link previews -->
+<meta property="og:site_name" content={SITE_NAME} />
+<meta property="og:type" content={type} />
+<meta property="og:title" content={fullTitle} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical} />
+<meta property="og:image" content={socialImage} />
+
+<!-- Twitter/X reads its own namespace rather than falling back to Open Graph -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={fullTitle} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={socialImage} />
