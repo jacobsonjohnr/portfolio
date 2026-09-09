@@ -21,7 +21,6 @@
   --surface-raised: #1a1d21;
   --text: #e9e8e5;
   --text-dim: #9b9d9f;
-  --text-muted: var(--text-dim); /* alias for older components, retired in polish */
   --border: #23262a;
   --border-strong: #32363b;
 
