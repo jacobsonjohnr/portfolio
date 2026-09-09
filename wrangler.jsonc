@@ -1,0 +1,16 @@
+{
+  // Tells Cloudflare how to deploy this site.
+  //
+  // The site is fully static, so there is no Worker script and no SSR adapter.
+  // This is an assets-only deployment: Cloudflare serves the contents of dist/
+  // straight from its edge network. "main" is deliberately absent, because
+  // there is no server-side code to run.
+  "name": "portfolio",
+  "compatibility_date": "2026-09-09",
+  "assets": {
+    "directory": "./dist",
+    // Serve our styled dist/404.html (with a real 404 status) for unknown URLs
+    // instead of Cloudflare's default error page.
+    "not_found_handling": "404-page"
+  }
+}
