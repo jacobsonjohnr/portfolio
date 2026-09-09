@@ -1,0 +1,121 @@
+---
+/*
+  index.astro — the projects listing at /projects.
+
+  Reads the same collection the detail pages use, so a new Markdown file appears
+  here automatically with no edit to this page.
+*/
+import { getCollection } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+import PageHeader from "../../components/PageHeader.astro";
+import StatusBadge from "../../components/StatusBadge.astro";
+import { dateRange } from "../../data/format";
+
+const projects = await getCollection("projects");
+/* Newest first. getTime() gives a number, so the subtraction sorts correctly. */
+projects.sort((a, b) => b.data.started.getTime() - a.data.started.getTime());
+---
+
+<Layout
+  title="Projects"
+  description="Embedded hardware, firmware, and digital logic projects by John Jacobson."
+>
+  <PageHeader
+    title="Projects"
+    lead="Embedded hardware and digital logic, plus the coursework worth writing up."
+  />
+
+  <div class="container listing">
+    <ul class="cards">
+      {
+        projects.map((project) => (
+          <li class="card">
+            <div class="card__meta">
+              <StatusBadge status={project.data.status} />
+              <span class="meta">{dateRange(project.data.started, project.data.ended)}</span>
+            </div>
+
+            <h2 class="card__title">
+              <a href={`/projects/${project.id}`}>{project.data.title}</a>
+            </h2>
+
+            <p class="card__summary">{project.data.summary}</p>
+
+            <ul class="tags">
+              {project.data.tech.map((item) => <li>{item}</li>)}
+            </ul>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</Layout>
+
+<style>
+  .listing {
+    padding-block: var(--space-5) var(--space-6);
+  }
+
+  .cards {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+  }
+
+  .card {
+    padding-bottom: var(--space-5);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .card:last-child {
+    padding-bottom: 0;
+    border-bottom: 0;
+  }
+
+  .card__meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-3);
+    margin-bottom: var(--space-2);
+  }
+
+  .card__title {
+    font-size: var(--fs-xl);
+  }
+
+  .card__title a {
+    color: var(--text);
+  }
+
+  .card__title a:hover {
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  .card__summary {
+    margin-top: var(--space-2);
+    color: var(--text-dim);
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    list-style: none;
+    margin: var(--space-3) 0 0;
+    padding: 0;
+  }
+
+  .tags li {
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 0.25rem 0.7rem;
+    font-family: var(--font-mono);
+    font-size: var(--fs-xs);
+    color: var(--text-dim);
+  }
+</style>
