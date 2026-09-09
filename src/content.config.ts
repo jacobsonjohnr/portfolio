@@ -25,8 +25,10 @@ const projects = defineCollection({
     updated: z.date(),
     tech: z.array(z.string()),
     featured: z.boolean().default(false),
-    /* A slot name from src/data/images.ts. */
+    /* Slot names from src/data/images.ts. `image` leads the page,
+       `imageDetail` sits below the write-up. */
     image: z.string().optional(),
+    imageDetail: z.string().optional(),
     repo: z.string().url().optional(),
   }),
 });

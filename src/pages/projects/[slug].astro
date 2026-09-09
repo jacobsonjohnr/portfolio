@@ -31,6 +31,10 @@ const { Content } = await render(project);
    before handing it to Figure. */
 const slot =
   d.image && d.image in images ? (d.image as ImageSlotName) : undefined;
+const detailSlot =
+  d.imageDetail && d.imageDetail in images
+    ? (d.imageDetail as ImageSlotName)
+    : undefined;
 ---
 
 <Layout title={d.title} description={d.summary} type="article">
@@ -62,6 +66,12 @@ const slot =
       <div class="prose">
         <Content />
       </div>
+
+      {detailSlot && (
+        <div class="body__figure body__figure--after">
+          <Figure slot={detailSlot} />
+        </div>
+      )}
 
       <footer class="body__footer">
         {d.repo && (
@@ -123,6 +133,11 @@ const slot =
   .body__figure {
     max-width: 720px;
     margin-bottom: var(--space-5);
+  }
+
+  .body__figure--after {
+    margin-top: var(--space-5);
+    margin-bottom: 0;
   }
 
   .body__footer {

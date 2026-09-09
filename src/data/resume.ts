@@ -58,13 +58,13 @@ export const sections: ResumeSection[] = [
         dates: "February 2026 to March 2026",
         bullets: [
           "Designed an eight state finite state machine for a vending machine controller restricted to NAND, NOR, and NOT gates, deriving the logic with Karnaugh maps and verifying the design in Xilinx Vivado with a SystemVerilog testbench.",
-          "Implemented the controller on a protoboard with TTL logic ICs, wiring an asynchronous reset and debugging with LEDs until it drove a physical vending machine prototype over a ribbon cable interface.",
+          "Implemented the controller on a breadboard with TTL logic ICs, wiring an asynchronous reset and debugging with LEDs until it drove a physical vending machine prototype over a ribbon cable interface.",
         ],
       },
       {
         title: "Personal Portfolio Site",
         org: "Astro, HTML and CSS, Git, Cloudflare Pages",
-        dates: "November 2025 to present",
+        dates: "June 2026 to present",
         bullets: [
           "Building a personal site in Astro that presents my engineering projects and flight training.",
           "Deploying through Cloudflare Pages with automatic rebuilds on every push to the GitHub repository.",

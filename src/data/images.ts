@@ -40,12 +40,12 @@ export const images = {
     width: 1600,
     height: 1066,
   },
-  "fsm-protoboard": {
-    src: "/images/placeholders/fsm-protoboard.svg",
-    alt: "The vending machine controller wired on a protoboard, with rows of TTL logic chips and LEDs showing the current state.",
+  "fsm-breadboard": {
+    src: "/images/fsm-breadboard.jpg",
+    alt: "The vending machine controller wired on a breadboard with logic ICs and jumper wires, connected by ribbon cable to the acrylic vending machine prototype behind it.",
     ratio: "3 / 2",
-    width: 1600,
-    height: 1067,
+    width: 1206,
+    height: 804,
   },
   "flying-cockpit": {
     src: "/images/flying-cockpit.jpg",
@@ -54,12 +54,19 @@ export const images = {
     width: 1600,
     height: 1066,
   },
-  "eagle-benches": {
-    src: "/images/placeholders/eagle-benches.svg",
-    alt: "A finished planter bench with a built-in catnip planter, built for the Forsyth County Humane Society.",
+  antarctica: {
+    src: "/images/antarctica.jpg",
+    alt: "John Jacobson in a yellow expedition parka and life vest, giving a thumbs up in front of a blue iceberg in Antarctica while snow falls.",
     ratio: "3 / 2",
     width: 1600,
-    height: 1067,
+    height: 1066,
+  },
+  "eagle-benches": {
+    src: "/images/eagle-benches.jpg",
+    alt: "John Jacobson in Scout uniform sitting on one of the finished planter benches he built for the Forsyth County Humane Society.",
+    ratio: "3 / 2",
+    width: 1600,
+    height: 1066,
   },
 } as const satisfies Record<string, ImageSlot>;
 

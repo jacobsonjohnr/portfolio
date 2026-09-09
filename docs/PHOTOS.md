@@ -23,12 +23,13 @@ Shoot a little wider than the target crop. Images are placed with
 | `awd-detail` | Aviation Weather Display, lower | **Done.** Close on the module and ribbon cable. |
 | `flying-cockpit` | Flying page | **Done.** C172 panel with cloud through the windscreen. |
 | `og-default` | Link previews | **Done.** Generated text card. |
-| `fsm-protoboard` | Vending Machine FSM page | **Still needed.** See below. |
-| `eagle-benches` | About, Scouting paragraph | **Still needed, optional.** See below. |
+| `fsm-breadboard` | Vending Machine FSM page | **Done.** Breadboard with the vending machine prototype behind it. |
+| `eagle-benches` | About, Scouting paragraph | **Done.** On the finished bench in uniform. |
+| `antarctica` | About, closing paragraph | **Done.** Antarctica, March 2025. |
 
 ## The two still outstanding
 
-**`fsm-protoboard`** is the only gap on a project page. It wants the protoboard
+**`fsm-breadboard`** is the only gap on a project page. It wants the breadboard
 with the TTL chips wired up, LEDs lit if you can power it, and the ribbon cable
 to the vending machine prototype if it is still attached. Shoot it straight down
 as well as at an angle, since the wiring is the interesting part. 3:2 landscape,
@@ -50,7 +51,7 @@ what is actually in the frame.
 | `headshot` | John Jacobson, head and shoulders. |
 | `awd-desk` | The aviation weather display running on an ESP32-P4 development board wired to a seven inch touchscreen on a desk. |
 | `awd-detail` | Close view of the ESP32-P4 board and the ribbon cable running to the DSI touchscreen. |
-| `fsm-protoboard` | The vending machine controller wired on a protoboard, with rows of TTL logic chips and LEDs showing the current state. |
+| `fsm-breadboard` | The vending machine controller wired on a breadboard, with rows of TTL logic chips and LEDs showing the current state. |
 | `flying-cockpit` | The instrument panel of a Cessna 172 in flight, with the horizon visible through the windscreen. |
 | `eagle-benches` | A finished planter bench with a built-in catnip planter, built for the Forsyth County Humane Society. |
 

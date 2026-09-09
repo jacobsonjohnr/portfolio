@@ -7,7 +7,7 @@ ended: 2026-03-01
 updated: 2026-09-09
 tech: ["Digital Logic", "Xilinx Vivado", "SystemVerilog", "TTL"]
 featured: true
-image: "fsm-protoboard"
+image: "fsm-breadboard"
 ---
 
 ## What it is
@@ -30,7 +30,7 @@ each expression until it fit the allowed gate set. I then wrote a SystemVerilog
 testbench and verified the design in Xilinx Vivado, walking the machine through
 every transition and checking the outputs against what the K-maps predicted.
 
-With the logic verified in simulation, I built it physically on a protoboard
+With the logic verified in simulation, I built it physically on a breadboard
 with TTL logic ICs. That included an asynchronous reset, so the machine could be
 forced back to its idle state at any point regardless of where it was in the
 sequence. I debugged it with LEDs wired to the state bits, which turned an

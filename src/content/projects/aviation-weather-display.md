@@ -7,6 +7,7 @@ updated: 2026-09-09
 tech: ["C++", "ESP-IDF", "LVGL", "ESP32-P4", "REST APIs"]
 featured: true
 image: "awd-desk"
+imageDetail: "awd-detail"
 ---
 
 ## What it is

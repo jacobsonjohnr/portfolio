@@ -2,7 +2,7 @@
 title: "This Website"
 summary: "A static Astro site deployed on Cloudflare Pages, built as a way to learn web development from close to nothing."
 status: "in-progress"
-started: 2025-11-01
+started: 2026-06-01
 updated: 2026-09-09
 tech: ["Astro", "HTML", "CSS", "Git", "Cloudflare Pages"]
 featured: false
