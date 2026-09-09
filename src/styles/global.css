@@ -1,94 +1,124 @@
 /*
-  global.css — site-wide base styles.
-  Loaded once in Layout.astro so every page gets it.
+  global.css — design tokens and base styles for johnrjacobson.com.
+  Loaded once in Layout.astro, so every page inherits it.
 
   Two parts:
-  1) Design tokens: CSS custom properties (variables) under :root.
-     Change a value here and it updates everywhere it's used.
-  2) Reset + base typography: sensible defaults so browsers agree.
+    1. Tokens — CSS custom properties. Change a value here and it updates
+       everywhere that uses it.
+    2. Base — reset and element defaults.
+
+  Design direction: near-monochrome and warm, with a single amber accent used
+  sparingly for links, focus rings, and in-progress status. Emphasis comes from
+  type weight, size, and whitespace rather than from colour. Metadata such as
+  dates and tech tags sits in mono at small sizes.
 */
 
-/* ---- 1. Design tokens --------------------------------------------------- */
+/* ---- 1. Tokens ---------------------------------------------------------- */
 :root {
-  /* Color palette (dark theme) */
-  --bg: #0e0e11;          /* page background — near black */
-  --surface: #16161b;     /* cards / raised areas, slightly lighter than bg */
-  --text: #f2f2f2;        /* primary text */
-  --text-muted: #a1a1aa;  /* secondary text, captions */
-  --border: #26262d;      /* hairline borders */
+  /* Surfaces and ink */
+  --bg: #0b0c0e;
+  --surface: #141619;
+  --surface-raised: #1a1d21;
+  --text: #e9e8e5;
+  --text-dim: #9b9d9f;
+  --text-muted: var(--text-dim); /* alias for older components, retired in polish */
+  --border: #23262a;
+  --border-strong: #32363b;
 
-  /* Accent — single source of truth. Swap this one line to recolor the site.
-     Placeholder electric-blue for now; we'll finalize on-screen. */
-  --accent: #4f8cff;
-  --accent-hover: #6ba0ff;
+  /* The one accent. Links, focus rings, in-progress status. Nothing else. */
+  --accent: #d9a05b;
+  --accent-hover: #e8b476;
 
-  /* Typography */
-  --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial,
-    sans-serif;
-  --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  /* Contrast against --bg: text 18.6:1, dim 7.2:1, accent 8.5:1. All clear AA. */
 
-  /* Spacing scale — consistent rhythm instead of random pixel values */
+  /* Status colour, used only on project status badges */
+  --status-done: #5fb87a;
+
+  /* Type. Plex is self-hosted via Fontsource, so there is no third-party
+     request and nothing render-blocking from another origin. */
+  --font-sans: "IBM Plex Sans Variable", ui-sans-serif, system-ui, -apple-system,
+    "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+
+  /* Fluid type scale. clamp(min, preferred, max) grows with the viewport
+     between a floor and a ceiling, so there are no breakpoint jumps. */
+  --fs-xs: 0.8125rem;
+  --fs-sm: 0.9375rem;
+  --fs-base: 1.0625rem;
+  --fs-lg: clamp(1.15rem, 1.08rem + 0.35vw, 1.3rem);
+  --fs-xl: clamp(1.35rem, 1.2rem + 0.7vw, 1.7rem);
+  --fs-2xl: clamp(1.7rem, 1.42rem + 1.3vw, 2.4rem);
+  --fs-3xl: clamp(2.1rem, 1.6rem + 2.2vw, 3.2rem);
+
+  /* Spacing. Same scale the site already used, extended at the top end. */
   --space-1: 0.25rem;
   --space-2: 0.5rem;
   --space-3: 1rem;
   --space-4: 1.5rem;
   --space-5: 2.5rem;
   --space-6: 4rem;
+  --space-7: 6rem;
+  --space-8: 8rem;
 
   /* Layout */
-  --max-width: 1100px;    /* content never gets wider than this */
-  --radius: 12px;         /* default corner rounding */
+  --shell: 1120px;
+  --measure: 68ch; /* comfortable line length for prose */
+  --nav-h: 64px;
+  --radius: 10px;
+  --radius-sm: 6px;
 }
 
-/* ---- 2. Reset + base ---------------------------------------------------- */
+/* ---- 2. Base ------------------------------------------------------------ */
 
-/* border-box makes width include padding+border — far easier to reason about */
+/* border-box makes width include padding and border, which is far easier to
+   reason about than the default content-box. */
 *,
 *::before,
 *::after {
   box-sizing: border-box;
 }
 
-/* Remove default margins; we add spacing intentionally */
+/* Drop default margins; spacing is added deliberately instead. */
 * {
   margin: 0;
 }
 
 html {
-  /* Smooth in-page anchor scrolling (used later by the nav) */
   scroll-behavior: smooth;
+  /* Anchored headings clear the sticky nav instead of hiding under it. */
+  scroll-padding-top: calc(var(--nav-h) + var(--space-3));
 }
 
 body {
   background-color: var(--bg);
   color: var(--text);
   font-family: var(--font-sans);
-  line-height: 1.6;
-  -webkit-font-smoothing: antialiased;  /* crisper text on macOS/WebKit */
+  font-size: var(--fs-base);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
   min-height: 100vh;
+  /* Belt and braces against horizontal scroll at narrow widths. */
+  overflow-x: hidden;
 }
 
-/* Headings: tighter line-height + balanced wrapping for nicer titles */
 h1,
 h2,
-h3 {
+h3,
+h4 {
   line-height: 1.15;
-  text-wrap: balance;
+  text-wrap: balance; /* avoids a single orphaned word on the last line */
+  font-weight: 600;
+  letter-spacing: -0.015em;
 }
 
-h1 {
-  font-size: clamp(2rem, 5vw, 3.25rem);  /* scales with viewport width */
-  letter-spacing: -0.02em;
-}
-
-h2 {
-  font-size: clamp(1.5rem, 3vw, 2rem);
-  letter-spacing: -0.01em;
-}
+h1 { font-size: var(--fs-3xl); }
+h2 { font-size: var(--fs-2xl); }
+h3 { font-size: var(--fs-xl); }
+h4 { font-size: var(--fs-lg); }
 
 p {
-  color: var(--text-muted);
-  max-width: 65ch;  /* limit line length for readability */
+  max-width: var(--measure);
+  text-wrap: pretty;
 }
 
 a {
@@ -98,24 +128,123 @@ a {
 
 a:hover {
   color: var(--accent-hover);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
 }
 
-img {
+img,
+svg,
+video {
   display: block;
-  max-width: 100%;  /* never overflow their container */
+  max-width: 100%;
   height: auto;
 }
 
-/* Visible focus outline for keyboard users (accessibility) */
-:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
+ul,
+ol {
+  padding-left: 1.1rem;
 }
 
-/* A reusable centered container for page content */
+code,
+pre,
+kbd,
+samp {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+}
+
+/* Keyboard users must always be able to see where they are. */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: var(--radius-sm);
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid var(--border);
+}
+
+/* ---- 3. Utilities ------------------------------------------------------- */
+
+/* Centred page column. */
 .container {
   width: 100%;
-  max-width: var(--max-width);
-  margin-inline: auto;          /* centers horizontally */
+  max-width: var(--shell);
+  margin-inline: auto;
   padding-inline: var(--space-4);
+}
+
+/* A narrower column for long-form reading. */
+.prose {
+  max-width: var(--measure);
+}
+
+/* Vertical rhythm between stacked prose blocks. */
+.prose > * + * {
+  margin-top: var(--space-3);
+}
+
+.prose > h2 + *,
+.prose > h3 + * {
+  margin-top: var(--space-2);
+}
+
+.prose > * + h2,
+.prose > * + h3 {
+  margin-top: var(--space-5);
+}
+
+/* Small mono metadata: dates, tags, status. */
+.meta {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  letter-spacing: 0.02em;
+  color: var(--text-dim);
+}
+
+/* Hidden visually, still announced by screen readers. */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Lets a keyboard user jump straight past the nav. Off-screen until focused. */
+.skip-link {
+  position: absolute;
+  top: var(--space-3);
+  left: var(--space-3);
+  z-index: 100;
+  padding: 0.6rem 1rem;
+  background: var(--surface-raised);
+  border: 1px solid var(--accent);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  transform: translateY(-250%);
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+/* ---- 4. Motion preferences ---------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

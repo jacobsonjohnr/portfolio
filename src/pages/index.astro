@@ -13,11 +13,14 @@ import Contact from "../components/Contact.astro";
 import Footer from "../components/Footer.astro";
 ---
 
-<Layout title="John Jacobson — Portfolio">
+<Layout
+  title="John Jacobson"
+  description="Electrical engineering student at the University of Illinois, building embedded hardware and firmware."
+>
   <!-- #top is the anchor the nav brand links back to -->
   <span id="top"></span>
   <Nav />
-  <main>
+  <main id="main">
     <Hero />
     <Projects />
     <About />

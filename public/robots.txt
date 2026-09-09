@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://johnrjacobson.com/sitemap-index.xml
