@@ -11,7 +11,7 @@ export const site = {
   url: "https://johnrjacobson.com",
   email: "jacobsonjohnr@gmail.com",
   github: "https://github.com/jacobsonjohnr",
-  linkedin: "https://www.linkedin.com/in/john-jacobson",
+  linkedin: "https://www.linkedin.com/in/john-jacobson-3182a3383",
 } as const;
 
 /* The primary navigation, in order. The footer reuses this and adds Uses. */
